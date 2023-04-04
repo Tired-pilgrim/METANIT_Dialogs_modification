@@ -10,6 +10,8 @@ namespace METANIT_Dialogs.ViewModels
             base.OnPropertyChanged(PropertyName);
             if (PropertyName == nameof(Text) )
             {
+                if (_model.MText != _text) _model.MText = _text;
+                //Предотвращает повторное присвоение того же значения после события model.ChangeText
                 ChangedText = true;
                 SaveTextCommand.RaiseCanExecuteChanged();
                 SaveAsTextCommand.RaiseCanExecuteChanged();
@@ -30,14 +32,14 @@ namespace METANIT_Dialogs.ViewModels
         public ViewModel(Model model )
         {
             _model = model;
-            model.LoadTextEvent += (s, e) => Text = e;
+            model.ChangeText += (s, e) => Text = e;
             SaveTextCommand = new RelayCommand(() => 
                 { model.SaveText(Text); ChangedText = false; }, CanSaveTextCommandEcxecute);
             SaveAsTextCommand = new RelayCommand(() =>
                 { model.SaveAsText(Text); ChangedText = false; }, CanSaveAsTextCommandEcxecute);
             OpenTextCommand = new RelayCommand(() =>
                 { model.LoadText(); ChangedText = false; });
-            ClearTextCommand = new RelayCommand(() => Text = string.Empty, CanSaveAsTextCommandEcxecute);
+            ClearTextCommand = new RelayCommand(() => model.ClearText(), CanSaveAsTextCommandEcxecute);
         }
         private string _text =  string.Empty;
         public string Text
