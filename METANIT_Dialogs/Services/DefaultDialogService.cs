@@ -57,9 +57,7 @@ namespace METANIT_Dialogs.Services
             {
                 ExistsPath = true;
                 _currebtPath = _saveFileDialog.FileName;
-                FilePath = _saveFileDialog.FileName;
-                File.WriteAllText(_saveFileDialog.FileName, str, Encoding.UTF8);
-                return true;
+                return SaveText(str);
             }
             else
             {
