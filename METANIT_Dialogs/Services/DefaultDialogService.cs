@@ -10,7 +10,6 @@ namespace METANIT_Dialogs.Services
     {
         private OpenFileDialog _openFileDialog;
         private SaveFileDialog _saveFileDialog;
-        public string FilePath { get; set; } = string.Empty;
         private readonly string TextFolder = Environment.CurrentDirectory + @"\Документы\";
         public DefaultDialogService() 
         {
@@ -33,6 +32,7 @@ namespace METANIT_Dialogs.Services
         }
         /// <summary>Есть ли путь для сохранения в файл</summary>
         public bool ExistsPath { get;  set; } = false;
+        /// <summary>Текущий путь к файлу</summary>
         private string _currebtPath = string.Empty;
         public event EventHandler<string>? LoadTextEvent;
         public bool LoadText()
@@ -46,7 +46,6 @@ namespace METANIT_Dialogs.Services
             }
             else
             {
-                MessageBox.Show("Документ не загружен");
                 return false;
             }            
         }
@@ -61,7 +60,6 @@ namespace METANIT_Dialogs.Services
             }
             else
             {
-                MessageBox.Show("Документ не сохранён");
                 return false;
             }
         }
@@ -69,13 +67,11 @@ namespace METANIT_Dialogs.Services
         {
             if (_currebtPath != string.Empty)
             {
-                FilePath = _saveFileDialog.FileName;
                 File.WriteAllText(_currebtPath, str, Encoding.UTF8);
                 return true;
             }
             else
             {
-                MessageBox.Show("Документ не сохранён");
                 return false;
             }
         }

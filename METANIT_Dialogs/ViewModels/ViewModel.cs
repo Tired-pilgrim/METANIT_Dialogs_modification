@@ -11,7 +11,8 @@ namespace METANIT_Dialogs.ViewModels
             if (PropertyName == nameof(Text) )
             {
                 if (_model.MText != _text) _model.MText = _text;
-                //Предотвращает повторное присвоение того же значения после события model.ChangeText
+                //Условие предотвращает повторное присвоение того же значения
+                //после события model.ChangeText
                 ChangedText = true;
                 SaveTextCommand.RaiseCanExecuteChanged();
                 SaveAsTextCommand.RaiseCanExecuteChanged();
